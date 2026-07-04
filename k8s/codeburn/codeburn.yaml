@@ -58,14 +58,20 @@ spec:
           volumeMounts:
             - name: codeburn-config
               mountPath: /home/node/.config/codeburn
-            - name: openclaw-history
-              mountPath: /home/node/.openclaw
+            - name: claude-projects
+              mountPath: /home/node/.claude/projects
               readOnly: true
-            - name: claude-history
-              mountPath: /home/node/.claude
+            - name: codex-sessions
+              mountPath: /home/node/.codex/sessions
               readOnly: true
-            - name: codex-history
-              mountPath: /home/node/.codex
+            - name: gemini-history
+              mountPath: /home/node/.gemini
+              readOnly: true
+            - name: cursor-global-storage
+              mountPath: /home/node/.config/Cursor/User/globalStorage
+              readOnly: true
+            - name: openclaw-agents
+              mountPath: /home/node/.openclaw/agents
               readOnly: true
           readinessProbe:
             httpGet:
@@ -92,20 +98,30 @@ spec:
         - name: codeburn-config
           persistentVolumeClaim:
             claimName: codeburn-data
-        - name: openclaw-history
+        - name: claude-projects
           nfs:
             server: 10.10.10.20
-            path: /home/martin/.openclaw
+            path: /home/martin/.claude/projects
             readOnly: true
-        - name: claude-history
+        - name: codex-sessions
           nfs:
             server: 10.10.10.20
-            path: /home/martin/.claude
+            path: /home/martin/.codex/sessions
             readOnly: true
-        - name: codex-history
+        - name: gemini-history
           nfs:
             server: 10.10.10.20
-            path: /home/martin/.codex
+            path: /home/martin/.gemini
+            readOnly: true
+        - name: cursor-global-storage
+          nfs:
+            server: 10.10.10.20
+            path: /home/martin/.config/Cursor/User/globalStorage
+            readOnly: true
+        - name: openclaw-agents
+          nfs:
+            server: 10.10.10.20
+            path: /home/martin/.openclaw/agents
             readOnly: true
 ---
 apiVersion: v1

@@ -24,12 +24,13 @@ La imagen actual usa el upstream de Codeburn. La PVC local-path se monta como co
 
 - `codeburn-data` -> `/home/node/.config/codeburn`
 
-Los historiales locales se leen mediante NFS desde `raspi5`:
+Los historiales locales se leen mediante NFS desde `raspi5`, limitados a las rutas documentadas por Codeburn:
 
-- `/home/martin/.openclaw` -> `/home/node/.openclaw` solo lectura
-- `/home/martin/.openclaw/agents` -> `/home/node/.openclaw/agents` solo lectura, incluido por el mount anterior
-- `/home/martin/.claude` -> `/home/node/.claude` solo lectura
-- `/home/martin/.codex` -> `/home/node/.codex` solo lectura
+- `/home/martin/.claude/projects` -> `/home/node/.claude/projects` solo lectura
+- `/home/martin/.codex/sessions` -> `/home/node/.codex/sessions` solo lectura
+- `/home/martin/.gemini` -> `/home/node/.gemini` solo lectura
+- `/home/martin/.config/Cursor/User/globalStorage` -> `/home/node/.config/Cursor/User/globalStorage` solo lectura
+- `/home/martin/.openclaw/agents` -> `/home/node/.openclaw/agents` solo lectura
 
 No hay secretos propios de Codeburn en Kubernetes.
 
