@@ -1,0 +1,22 @@
+services:
+  codeburn-web:
+    build: .
+    container_name: codeburn-web
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:8787:8787"
+    environment:
+      HOST: 0.0.0.0
+      PORT: "8787"
+      TZ: America/Argentina/Buenos_Aires
+      NODE_NO_WARNINGS: "1"
+      CODEBURN_REFRESH_MS: "300000"
+      CODEBURN_DB: /app/data/codeburn.sqlite
+      CODEBURN_DEVICE_HOSTNAME: raspi5
+    volumes:
+      - ./data:/app/data
+      # codeburn necesita leer los historiales locales del host; sin estos mounts
+      # el contenedor ve /home/node vacío y recolecta snapshots en cero.
+      - /home/martin/.openclaw:/home/node/.openclaw:ro
+      - /home/martin/.claude:/home/node/.claude:ro
+      - /home/martin/.codex:/home/node/.codex:ro

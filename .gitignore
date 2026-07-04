@@ -1,0 +1,29 @@
+# Datos runtime — nunca publicar
+data/
+.token
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# SQLite fuera de data/ (por las dudas)
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Logs sueltos
+*.log
+*.pid
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+Thumbs.db
