@@ -14,9 +14,10 @@ Codeburn esta publicado en el cluster local k3s como servicio interno de infraes
 - Service: `codeburn:8787`
 - IngressRoute: `codeburn-home`
 - PVC: `codeburn-data` de 1Gi con `local-path`, montada como config de Codeburn upstream
-- Imagen en containerd del nodo k3s: `codeburn-web:upstream-20260703-2319`
+- Imagen en containerd del nodo k3s: `codeburn-web:v0.9.15`
 - Fuente de la imagen: `https://github.com/getagentseal/codeburn` (`1678cbd`, version `0.9.15`)
 - Comando de inicio: `codeburn web --no-open --port 8787`
+- Probes Kubernetes: `/api/identity` para evitar que `/api/usage` dispare escaneos pesados de datos
 
 ## Datos y lecturas locales
 
@@ -40,6 +41,7 @@ El upstream bindearia por defecto solo en `127.0.0.1` y rechazaria hosts externo
 
 - `CODEBURN_ALLOW_REMOTE=1` permite requests por `codeburn.home`
 - `HOST=0.0.0.0` hace que el dashboard escuche dentro del pod
+- `CODEBURN_SKIP_BOOTSTRAP=1` evita que `/` bloquee precargando el escaneo completo antes de servir HTML
 
 Los archivos de build local estan en:
 
@@ -47,6 +49,8 @@ Los archivos de build local estan en:
 /home/martin/.openclaw/workspace/developer/codeburn-upstream/Dockerfile.k3s
 /home/martin/.openclaw/workspace/developer/codeburn-upstream/patch_remote.js
 ```
+
+La imagen instala `procps` para disponer del comando `ps` dentro del contenedor.
 
 ## Comandos utiles
 

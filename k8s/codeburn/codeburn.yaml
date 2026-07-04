@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
         - name: codeburn
-          image: codeburn-web:upstream-20260703-2319
+          image: codeburn-web:v0.9.15
           imagePullPolicy: Never
           command:
             - codeburn
@@ -48,6 +48,8 @@ spec:
             - name: HOST
               value: "0.0.0.0"
             - name: CODEBURN_ALLOW_REMOTE
+              value: "1"
+            - name: CODEBURN_SKIP_BOOTSTRAP
               value: "1"
             - name: HOME
               value: /home/node
@@ -75,14 +77,14 @@ spec:
               readOnly: true
           readinessProbe:
             httpGet:
-              path: /api/usage
+              path: /api/identity
               port: 8787
             initialDelaySeconds: 30
             periodSeconds: 15
             timeoutSeconds: 30
           livenessProbe:
             httpGet:
-              path: /api/usage
+              path: /api/identity
               port: 8787
             initialDelaySeconds: 60
             periodSeconds: 30
