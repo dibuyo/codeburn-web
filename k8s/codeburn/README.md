@@ -27,6 +27,7 @@ La imagen actual usa el upstream de Codeburn. La PVC local-path se monta como co
 Los historiales locales se leen mediante NFS desde `raspi5`:
 
 - `/home/martin/.openclaw` -> `/home/node/.openclaw` solo lectura
+- `/home/martin/.openclaw/agents` -> `/home/node/.openclaw/agents` solo lectura, incluido por el mount anterior
 - `/home/martin/.claude` -> `/home/node/.claude` solo lectura
 - `/home/martin/.codex` -> `/home/node/.codex` solo lectura
 
