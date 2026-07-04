@@ -33,29 +33,31 @@ spec:
     spec:
       containers:
         - name: codeburn
-          image: codeburn-web:v0.9.8
+          image: codeburn-web:upstream-20260703-2319
           imagePullPolicy: Never
+          command:
+            - codeburn
+            - web
+            - --no-open
+            - --port
+            - "8787"
           ports:
             - name: http
               containerPort: 8787
           env:
             - name: HOST
               value: "0.0.0.0"
-            - name: PORT
-              value: "8787"
+            - name: CODEBURN_ALLOW_REMOTE
+              value: "1"
+            - name: HOME
+              value: /home/node
             - name: TZ
               value: "America/Argentina/Buenos_Aires"
             - name: NODE_NO_WARNINGS
               value: "1"
-            - name: CODEBURN_REFRESH_MS
-              value: "300000"
-            - name: CODEBURN_DB
-              value: /app/data/codeburn.sqlite
-            - name: CODEBURN_DEVICE_HOSTNAME
-              value: raspi5
           volumeMounts:
-            - name: data
-              mountPath: /app/data
+            - name: codeburn-config
+              mountPath: /home/node/.config/codeburn
             - name: openclaw-history
               mountPath: /home/node/.openclaw
               readOnly: true
@@ -67,16 +69,18 @@ spec:
               readOnly: true
           readinessProbe:
             httpGet:
-              path: /api/status
-              port: 8787
-            initialDelaySeconds: 15
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /api/status
+              path: /api/usage
               port: 8787
             initialDelaySeconds: 30
-            periodSeconds: 20
+            periodSeconds: 15
+            timeoutSeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /api/usage
+              port: 8787
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 30
           resources:
             requests:
               cpu: 50m
@@ -85,7 +89,7 @@ spec:
               cpu: 500m
               memory: 512Mi
       volumes:
-        - name: data
+        - name: codeburn-config
           persistentVolumeClaim:
             claimName: codeburn-data
         - name: openclaw-history
