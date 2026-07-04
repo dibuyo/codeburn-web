@@ -24,6 +24,7 @@ Codeburn esta publicado en el cluster local k3s como servicio interno de infraes
 La imagen actual usa el upstream de Codeburn. La PVC local-path se monta como configuracion persistente:
 
 - `codeburn-data` -> `/home/node/.config/codeburn`
+- `/home/martin/data/codeburn/cache` en el nodo `raspberrypi` -> `/home/node/.cache/codeburn`
 
 Los historiales locales se leen mediante NFS desde `raspi5`, limitados a las rutas documentadas por Codeburn:
 

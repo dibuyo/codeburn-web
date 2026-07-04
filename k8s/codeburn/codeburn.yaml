@@ -60,6 +60,8 @@ spec:
           volumeMounts:
             - name: codeburn-config
               mountPath: /home/node/.config/codeburn
+            - name: codeburn-cache
+              mountPath: /home/node/.cache/codeburn
             - name: claude-projects
               mountPath: /home/node/.claude/projects
               readOnly: true
@@ -100,6 +102,10 @@ spec:
         - name: codeburn-config
           persistentVolumeClaim:
             claimName: codeburn-data
+        - name: codeburn-cache
+          hostPath:
+            path: /home/martin/data/codeburn/cache
+            type: DirectoryOrCreate
         - name: claude-projects
           nfs:
             server: 10.10.10.20
